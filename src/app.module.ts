@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
+//import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
 
 // A medida que cada persona termine su módulo, lo importa aquí, ejemplo:
 // import { UsuariosModule } from './modules/usuarios/usuarios.module';
@@ -28,7 +28,7 @@ import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.mod
         synchronize: false, // se trabaja con migraciones desde el inicio
       }),
     }),
-    CultivosLotesModule,
+    //CultivosLotesModule,
     // UsuariosModule,
     // ProduccionModule,
     // InventarioModule,
