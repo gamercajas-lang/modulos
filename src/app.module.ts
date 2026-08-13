@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
+//import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
 import { ProduccionModule } from './modules/produccion/produccion.module';
 import { InventarioModule } from './modules/inventario/inventario.module';
 
@@ -28,7 +28,7 @@ import { InventarioModule } from './modules/inventario/inventario.module';
         synchronize: false, // se trabaja con migraciones desde el inicio
       }),
     }),
-    CultivosLotesModule,
+   // CultivosLotesModule,
     ProduccionModule,
     InventarioModule,
     // UsuariosModule,
