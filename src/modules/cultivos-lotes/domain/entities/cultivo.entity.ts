@@ -50,9 +50,6 @@ export class Cultivo {
   @Column({ type: 'varchar', nullable: true })
   estado: string;
 
-  @CreateDateColumn({ name: 'fechaCreacion' })
-  fechaCreacion: Date;
-
   @OneToMany(() => CultivoHistorial, (historial) => historial.cultivo)
   historial: CultivoHistorial[];
 
