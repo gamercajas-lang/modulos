@@ -15,8 +15,8 @@ export class TypeOrmHistorialPrecioLoteRepository implements IHistorialPrecioLot
 
   async create(historial: Partial<HistorialPrecioLote>): Promise<HistorialPrecioLote> {
     const persistence = HistorialPrecioLoteMapper.toPersistence(historial);
-    const saved = await this.repository.save(persistence);
-    return HistorialPrecioLoteMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return HistorialPrecioLoteMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<HistorialPrecioLote | null> {
@@ -24,18 +24,21 @@ export class TypeOrmHistorialPrecioLoteRepository implements IHistorialPrecioLot
       where: { id },
       relations: ['loteProduccion'],
     });
-    return found ? HistorialPrecioLoteMapper.toDomain(found) : null;
+    return HistorialPrecioLoteMapper.toDomain(found);
   }
 
   async findAll(): Promise<HistorialPrecioLote[]> {
     const all = await this.repository.find({ relations: ['loteProduccion'] });
-    return all.map(HistorialPrecioLoteMapper.toDomain);
+    return all
+      .map((item) => HistorialPrecioLoteMapper.toDomain(item))
+      .filter((item): item is HistorialPrecioLote => item !== null);
   }
 
   async update(id: number, historial: Partial<HistorialPrecioLote>): Promise<HistorialPrecioLote | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = HistorialPrecioLoteMapper.toPersistence({ ...existing, ...historial });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return HistorialPrecioLoteMapper.toDomain(saved);

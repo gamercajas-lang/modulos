@@ -15,24 +15,27 @@ export class TypeOrmProductoAgroRepository implements IProductoAgroRepository {
 
   async create(producto: Partial<ProductoAgro>): Promise<ProductoAgro> {
     const persistence = ProductoAgroMapper.toPersistence(producto);
-    const saved = await this.repository.save(persistence);
-    return ProductoAgroMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return ProductoAgroMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<ProductoAgro | null> {
     const found = await this.repository.findOne({ where: { id } });
-    return found ? ProductoAgroMapper.toDomain(found) : null;
+    return ProductoAgroMapper.toDomain(found);
   }
 
   async findAll(): Promise<ProductoAgro[]> {
     const all = await this.repository.find();
-    return all.map(ProductoAgroMapper.toDomain);
+    return all
+      .map((item) => ProductoAgroMapper.toDomain(item))
+      .filter((item): item is ProductoAgro => item !== null);
   }
 
   async update(id: number, producto: Partial<ProductoAgro>): Promise<ProductoAgro | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = ProductoAgroMapper.toPersistence({ ...existing, ...producto });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return ProductoAgroMapper.toDomain(saved);

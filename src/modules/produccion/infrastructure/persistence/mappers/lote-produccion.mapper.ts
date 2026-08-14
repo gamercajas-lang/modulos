@@ -3,7 +3,7 @@ import { LoteProduccionEntity } from '../entities/lote-produccion.entity';
 import { ProductoAgroMapper } from './producto-agro.mapper';
 
 export class LoteProduccionMapper {
-  static toDomain(entity: LoteProduccionEntity): LoteProduccion {
+  static toDomain(entity: LoteProduccionEntity | null | undefined): LoteProduccion | null {
     if (!entity) return null;
     return new LoteProduccion(
       entity.id,
@@ -21,11 +21,11 @@ export class LoteProduccionMapper {
       entity.createdAt,
       entity.updatedAt,
       entity.deletedAt,
-      entity.productoAgro ? ProductoAgroMapper.toDomain(entity.productoAgro) : undefined,
+      entity.productoAgro ? ProductoAgroMapper.toDomain(entity.productoAgro) ?? undefined : undefined,
     );
   }
 
-  static toPersistence(model: Partial<LoteProduccion>): Partial<LoteProduccionEntity> {
+  static toPersistence(model: Partial<LoteProduccion> | null | undefined): LoteProduccionEntity | null {
     if (!model) return null;
     const entity = new LoteProduccionEntity();
     if (model.id !== undefined) entity.id = model.id;

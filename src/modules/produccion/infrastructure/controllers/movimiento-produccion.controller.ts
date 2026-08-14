@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { MovimientoProduccionUseCases } from '../../application/use-cases/movimiento-produccion.use-cases';
 import { CreateMovimientoProduccionDto } from './dtos/create-movimiento-produccion.dto';
 import { UpdateMovimientoProduccionDto } from './dtos/update-movimiento-produccion.dto';
@@ -26,8 +38,16 @@ export class MovimientoProduccionController {
     return this.useCases.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateMovimientoProduccionDto) {
+    return this.useCases.update(id, {
+      ...dto,
+      fecha: dto.fecha ? new Date(dto.fecha) : undefined,
+    });
+  }
+
+  @Put(':id')
+  updatePut(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateMovimientoProduccionDto) {
     return this.useCases.update(id, {
       ...dto,
       fecha: dto.fecha ? new Date(dto.fecha) : undefined,

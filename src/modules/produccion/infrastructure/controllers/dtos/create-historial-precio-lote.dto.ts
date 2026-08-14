@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty, IsOptional, IsDateString } from 'class-validator';
+import { IsNumber, IsString, IsNotEmpty, IsOptional, IsDateString, Min, MaxLength } from 'class-validator';
 
 export class CreateHistorialPrecioLoteDto {
   @IsNumber()
@@ -7,10 +7,12 @@ export class CreateHistorialPrecioLoteDto {
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
   precioAnterior: number;
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
   precioNuevo: number;
 
   @IsNumber()
@@ -23,5 +25,6 @@ export class CreateHistorialPrecioLoteDto {
 
   @IsString()
   @IsOptional()
+  @MaxLength(255)
   razon?: string;
 }

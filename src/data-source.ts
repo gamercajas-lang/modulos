@@ -10,7 +10,7 @@ export default new DataSource({
   username: process.env.DB_USERNAME ?? 'postgres',
   password: process.env.DB_PASSWORD ?? '',
   database: process.env.DB_NAME ?? 'proyecto_agro',
-  entities: ['src/**/*.entity.ts'],
-  migrations: ['src/migrations/*.ts'],
+  entities: [__dirname + '/**/*.entity.{js,ts}'],
+  migrations: [__dirname + '/migrations/*.{js,ts}'],
   synchronize: false,
 });

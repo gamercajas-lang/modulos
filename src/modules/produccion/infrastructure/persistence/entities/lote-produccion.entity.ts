@@ -21,16 +21,29 @@ export class LoteProduccionEntity {
   @Column({ type: 'integer', name: 'producto_agro_id' })
   productoAgroId: number;
 
-  @Column({ type: 'integer', name: 'cultivo_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Cultivos' (tabla: cultivos).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'cultivo_id', nullable: true, comment: 'FK lógica -> módulo cultivos (cultivos.id)' })
   cultivoId: number;
 
-  @Column({ type: 'integer', name: 'lote_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Cultivos/Lotes' (tabla: lotes).
+   */
+  @Column({ type: 'integer', name: 'lote_id', nullable: true, comment: 'FK lógica -> módulo cultivos (lotes.id)' })
   loteId: number;
 
-  @Column({ type: 'integer', name: 'sub_lote_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Cultivos/SubLotes' (tabla: sub_lotes).
+   */
+  @Column({ type: 'integer', name: 'sub_lote_id', nullable: true, comment: 'FK lógica -> módulo cultivos (sub_lotes.id)' })
   subLoteId: number;
 
-  @Column({ type: 'integer', name: 'actividad_cosecha_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Actividades' (tabla: actividades_cosecha / actividades).
+   */
+  @Column({ type: 'integer', name: 'actividad_cosecha_id', nullable: true, comment: 'FK lógica -> módulo actividades (actividades.id)' })
   actividadCosechaId: number;
 
   @Column({ type: 'varchar', nullable: true })

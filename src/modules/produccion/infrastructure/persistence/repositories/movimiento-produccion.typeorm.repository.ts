@@ -15,8 +15,8 @@ export class TypeOrmMovimientoProduccionRepository implements IMovimientoProducc
 
   async create(movimiento: Partial<MovimientoProduccion>): Promise<MovimientoProduccion> {
     const persistence = MovimientoProduccionMapper.toPersistence(movimiento);
-    const saved = await this.repository.save(persistence);
-    return MovimientoProduccionMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return MovimientoProduccionMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<MovimientoProduccion | null> {
@@ -24,18 +24,21 @@ export class TypeOrmMovimientoProduccionRepository implements IMovimientoProducc
       where: { id },
       relations: ['loteProduccion'],
     });
-    return found ? MovimientoProduccionMapper.toDomain(found) : null;
+    return MovimientoProduccionMapper.toDomain(found);
   }
 
   async findAll(): Promise<MovimientoProduccion[]> {
     const all = await this.repository.find({ relations: ['loteProduccion'] });
-    return all.map(MovimientoProduccionMapper.toDomain);
+    return all
+      .map((item) => MovimientoProduccionMapper.toDomain(item))
+      .filter((item): item is MovimientoProduccion => item !== null);
   }
 
   async update(id: number, movimiento: Partial<MovimientoProduccion>): Promise<MovimientoProduccion | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = MovimientoProduccionMapper.toPersistence({ ...existing, ...movimiento });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return MovimientoProduccionMapper.toDomain(saved);

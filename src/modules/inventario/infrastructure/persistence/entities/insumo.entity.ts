@@ -61,7 +61,11 @@ export class InsumoEntity {
   @Column({ type: 'integer', name: 'almacen_id' })
   almacenId: number;
 
-  @Column({ type: 'integer', name: 'proveedor_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Proveedores' (tabla: proveedores).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'proveedor_id', nullable: true, comment: 'FK lógica -> módulo proveedores (proveedores.id)' })
   proveedorId: number;
 
   @Column({ type: 'integer', name: 'categoria_id' })
@@ -70,7 +74,11 @@ export class InsumoEntity {
   @Column({ type: 'timestamp', name: 'fecha_registro', nullable: true })
   fechaRegistro: Date;
 
-  @Column({ type: 'integer', name: 'creado_por_usuario_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Usuarios' (tabla: usuarios).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'creado_por_usuario_id', nullable: true, comment: 'FK lógica -> módulo usuarios (usuarios.id)' })
   creadoPorUsuarioId: number;
 
   @Column({ type: 'varchar', name: 'tipo_insumo', nullable: true })

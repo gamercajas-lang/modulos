@@ -2,7 +2,7 @@ import { Categoria } from '../../../domain/models/categoria.model';
 import { CategoriaEntity } from '../entities/categoria.entity';
 
 export class CategoriaMapper {
-  static toDomain(entity: CategoriaEntity): Categoria {
+  static toDomain(entity: CategoriaEntity | null | undefined): Categoria | null {
     if (!entity) return null;
     return new Categoria(
       entity.id,
@@ -15,7 +15,7 @@ export class CategoriaMapper {
     );
   }
 
-  static toPersistence(model: Partial<Categoria>): Partial<CategoriaEntity> {
+  static toPersistence(model: Partial<Categoria> | null | undefined): CategoriaEntity | null {
     if (!model) return null;
     const entity = new CategoriaEntity();
     if (model.id !== undefined) entity.id = model.id;

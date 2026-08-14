@@ -15,8 +15,8 @@ export class TypeOrmInsumoRepository implements IInsumoRepository {
 
   async create(insumo: Partial<Insumo>): Promise<Insumo> {
     const persistence = InsumoMapper.toPersistence(insumo);
-    const saved = await this.repository.save(persistence);
-    return InsumoMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return InsumoMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<Insumo | null> {
@@ -24,18 +24,21 @@ export class TypeOrmInsumoRepository implements IInsumoRepository {
       where: { id },
       relations: ['almacen', 'categoria'],
     });
-    return found ? InsumoMapper.toDomain(found) : null;
+    return InsumoMapper.toDomain(found);
   }
 
   async findAll(): Promise<Insumo[]> {
     const all = await this.repository.find({ relations: ['almacen', 'categoria'] });
-    return all.map(InsumoMapper.toDomain);
+    return all
+      .map((item) => InsumoMapper.toDomain(item))
+      .filter((item): item is Insumo => item !== null);
   }
 
   async update(id: number, insumo: Partial<Insumo>): Promise<Insumo | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = InsumoMapper.toPersistence({ ...existing, ...insumo });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return InsumoMapper.toDomain(saved);

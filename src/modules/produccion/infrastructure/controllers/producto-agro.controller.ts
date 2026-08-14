@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ProductoAgroUseCases } from '../../application/use-cases/producto-agro.use-cases';
 import { CreateProductoAgroDto } from './dtos/create-producto-agro.dto';
 import { UpdateProductoAgroDto } from './dtos/update-producto-agro.dto';
@@ -23,8 +35,13 @@ export class ProductoAgroController {
     return this.useCases.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProductoAgroDto) {
+    return this.useCases.update(id, dto);
+  }
+
+  @Put(':id')
+  updatePut(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateProductoAgroDto) {
     return this.useCases.update(id, dto);
   }
 

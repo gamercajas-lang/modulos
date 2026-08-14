@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty, IsOptional, IsDateString } from 'class-validator';
+import { IsNumber, IsString, IsNotEmpty, IsOptional, IsDateString, Min, MaxLength } from 'class-validator';
 
 export class CreateMovimientoProduccionDto {
   @IsNumber()
@@ -7,18 +7,22 @@ export class CreateMovimientoProduccionDto {
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   tipo: string;
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
   cantidadKg: number;
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
   costoUnitarioKg: number;
 
   @IsNumber()
   @IsNotEmpty()
+  @Min(0)
   costoTotal: number;
 
   @IsNumber()

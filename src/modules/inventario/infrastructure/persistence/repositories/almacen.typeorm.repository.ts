@@ -15,24 +15,27 @@ export class TypeOrmAlmacenRepository implements IAlmacenRepository {
 
   async create(almacen: Partial<Almacen>): Promise<Almacen> {
     const persistence = AlmacenMapper.toPersistence(almacen);
-    const saved = await this.repository.save(persistence);
-    return AlmacenMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return AlmacenMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<Almacen | null> {
     const found = await this.repository.findOne({ where: { id } });
-    return found ? AlmacenMapper.toDomain(found) : null;
+    return AlmacenMapper.toDomain(found);
   }
 
   async findAll(): Promise<Almacen[]> {
     const all = await this.repository.find();
-    return all.map(AlmacenMapper.toDomain);
+    return all
+      .map((item) => AlmacenMapper.toDomain(item))
+      .filter((item): item is Almacen => item !== null);
   }
 
   async update(id: number, almacen: Partial<Almacen>): Promise<Almacen | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = AlmacenMapper.toPersistence({ ...existing, ...almacen });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return AlmacenMapper.toDomain(saved);

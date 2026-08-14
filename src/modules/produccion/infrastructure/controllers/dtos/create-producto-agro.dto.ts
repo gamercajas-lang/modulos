@@ -1,12 +1,14 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
 export class CreateProductoAgroDto {
   @IsString()
   @IsNotEmpty()
+  @MaxLength(255)
   nombre: string;
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
   unidadBase: string;
 
   @IsString()

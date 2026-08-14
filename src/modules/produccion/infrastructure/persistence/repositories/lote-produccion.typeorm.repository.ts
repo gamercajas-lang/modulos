@@ -15,8 +15,8 @@ export class TypeOrmLoteProduccionRepository implements ILoteProduccionRepositor
 
   async create(lote: Partial<LoteProduccion>): Promise<LoteProduccion> {
     const persistence = LoteProduccionMapper.toPersistence(lote);
-    const saved = await this.repository.save(persistence);
-    return LoteProduccionMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return LoteProduccionMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<LoteProduccion | null> {
@@ -24,18 +24,21 @@ export class TypeOrmLoteProduccionRepository implements ILoteProduccionRepositor
       where: { id },
       relations: ['productoAgro'],
     });
-    return found ? LoteProduccionMapper.toDomain(found) : null;
+    return LoteProduccionMapper.toDomain(found);
   }
 
   async findAll(): Promise<LoteProduccion[]> {
     const all = await this.repository.find({ relations: ['productoAgro'] });
-    return all.map(LoteProduccionMapper.toDomain);
+    return all
+      .map((item) => LoteProduccionMapper.toDomain(item))
+      .filter((item): item is LoteProduccion => item !== null);
   }
 
   async update(id: number, lote: Partial<LoteProduccion>): Promise<LoteProduccion | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = LoteProduccionMapper.toPersistence({ ...existing, ...lote });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return LoteProduccionMapper.toDomain(saved);

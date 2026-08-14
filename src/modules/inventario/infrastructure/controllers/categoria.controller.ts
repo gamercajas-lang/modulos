@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { CategoriaUseCases } from '../../application/use-cases/categoria.use-cases';
 import { CreateCategoriaDto } from './dtos/create-categoria.dto';
 import { UpdateCategoriaDto } from './dtos/update-categoria.dto';
@@ -23,8 +35,13 @@ export class CategoriaController {
     return this.useCases.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCategoriaDto) {
+    return this.useCases.update(id, dto);
+  }
+
+  @Put(':id')
+  updatePut(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCategoriaDto) {
     return this.useCases.update(id, dto);
   }
 

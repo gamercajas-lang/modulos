@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { InsumoUseCases } from '../../application/use-cases/insumo.use-cases';
 import { CreateInsumoDto } from './dtos/create-insumo.dto';
 import { UpdateInsumoDto } from './dtos/update-insumo.dto';
@@ -31,8 +43,21 @@ export class InsumoController {
     return this.useCases.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateInsumoDto) {
+    return this.useCases.update(id, {
+      ...dto,
+      fechaRegistro: dto.fechaRegistro ? new Date(dto.fechaRegistro) : undefined,
+      fechaAdquisicion: dto.fechaAdquisicion ? new Date(dto.fechaAdquisicion) : undefined,
+      fechaUltimoMantenimiento: dto.fechaUltimoMantenimiento
+        ? new Date(dto.fechaUltimoMantenimiento)
+        : undefined,
+      fechaBaja: dto.fechaBaja ? new Date(dto.fechaBaja) : undefined,
+    });
+  }
+
+  @Put(':id')
+  updatePut(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateInsumoDto) {
     return this.useCases.update(id, {
       ...dto,
       fechaRegistro: dto.fechaRegistro ? new Date(dto.fechaRegistro) : undefined,

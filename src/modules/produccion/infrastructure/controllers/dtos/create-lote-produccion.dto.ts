@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsNotEmpty, IsOptional, Min, MaxLength } from 'class-validator';
 
 export class CreateLoteProduccionDto {
   @IsNumber()
@@ -23,25 +23,31 @@ export class CreateLoteProduccionDto {
 
   @IsString()
   @IsOptional()
+  @MaxLength(100)
   calidad?: string;
 
   @IsNumber()
   @IsOptional()
+  @Min(0)
   cantidadKg?: number;
 
   @IsNumber()
   @IsOptional()
+  @Min(0)
   stockDisponibleKg?: number;
 
   @IsNumber()
   @IsOptional()
+  @Min(0)
   costoUnitarioKg?: number;
 
   @IsNumber()
   @IsOptional()
+  @Min(0)
   costoTotal?: number;
 
   @IsNumber()
   @IsOptional()
+  @Min(0)
   precioSugeridoKg?: number;
 }

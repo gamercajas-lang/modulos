@@ -2,7 +2,7 @@ import { ProductoAgro } from '../../../domain/models/producto-agro.model';
 import { ProductoAgroEntity } from '../entities/producto-agro.entity';
 
 export class ProductoAgroMapper {
-  static toDomain(entity: ProductoAgroEntity): ProductoAgro {
+  static toDomain(entity: ProductoAgroEntity | null | undefined): ProductoAgro | null {
     if (!entity) return null;
     return new ProductoAgro(
       entity.id,
@@ -16,7 +16,7 @@ export class ProductoAgroMapper {
     );
   }
 
-  static toPersistence(model: Partial<ProductoAgro>): Partial<ProductoAgroEntity> {
+  static toPersistence(model: Partial<ProductoAgro> | null | undefined): ProductoAgroEntity | null {
     if (!model) return null;
     const entity = new ProductoAgroEntity();
     if (model.id !== undefined) entity.id = model.id;

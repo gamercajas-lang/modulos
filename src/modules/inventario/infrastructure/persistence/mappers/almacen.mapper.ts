@@ -2,7 +2,7 @@ import { Almacen } from '../../../domain/models/almacen.model';
 import { AlmacenEntity } from '../entities/almacen.entity';
 
 export class AlmacenMapper {
-  static toDomain(entity: AlmacenEntity): Almacen {
+  static toDomain(entity: AlmacenEntity | null | undefined): Almacen | null {
     if (!entity) return null;
     return new Almacen(
       entity.id,
@@ -15,7 +15,7 @@ export class AlmacenMapper {
     );
   }
 
-  static toPersistence(model: Partial<Almacen>): Partial<AlmacenEntity> {
+  static toPersistence(model: Partial<Almacen> | null | undefined): AlmacenEntity | null {
     if (!model) return null;
     const entity = new AlmacenEntity();
     if (model.id !== undefined) entity.id = model.id;

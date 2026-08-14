@@ -15,24 +15,27 @@ export class TypeOrmCategoriaRepository implements ICategoriaRepository {
 
   async create(categoria: Partial<Categoria>): Promise<Categoria> {
     const persistence = CategoriaMapper.toPersistence(categoria);
-    const saved = await this.repository.save(persistence);
-    return CategoriaMapper.toDomain(saved);
+    const saved = await this.repository.save(persistence ?? {});
+    return CategoriaMapper.toDomain(saved)!;
   }
 
   async findById(id: number): Promise<Categoria | null> {
     const found = await this.repository.findOne({ where: { id } });
-    return found ? CategoriaMapper.toDomain(found) : null;
+    return CategoriaMapper.toDomain(found);
   }
 
   async findAll(): Promise<Categoria[]> {
     const all = await this.repository.find();
-    return all.map(CategoriaMapper.toDomain);
+    return all
+      .map((item) => CategoriaMapper.toDomain(item))
+      .filter((item): item is Categoria => item !== null);
   }
 
   async update(id: number, categoria: Partial<Categoria>): Promise<Categoria | null> {
     const existing = await this.repository.findOne({ where: { id } });
     if (!existing) return null;
     const persistence = CategoriaMapper.toPersistence({ ...existing, ...categoria });
+    if (!persistence) return null;
     persistence.id = id;
     const saved = await this.repository.save(persistence);
     return CategoriaMapper.toDomain(saved);

@@ -4,7 +4,7 @@ import { AlmacenMapper } from './almacen.mapper';
 import { CategoriaMapper } from './categoria.mapper';
 
 export class InsumoMapper {
-  static toDomain(entity: InsumoEntity): Insumo {
+  static toDomain(entity: InsumoEntity | null | undefined): Insumo | null {
     if (!entity) return null;
     return new Insumo(
       entity.id,
@@ -43,12 +43,12 @@ export class InsumoMapper {
       entity.createdAt,
       entity.updatedAt,
       entity.deletedAt,
-      entity.almacen ? AlmacenMapper.toDomain(entity.almacen) : undefined,
-      entity.categoria ? CategoriaMapper.toDomain(entity.categoria) : undefined,
+      entity.almacen ? AlmacenMapper.toDomain(entity.almacen) ?? undefined : undefined,
+      entity.categoria ? CategoriaMapper.toDomain(entity.categoria) ?? undefined : undefined,
     );
   }
 
-  static toPersistence(model: Partial<Insumo>): Partial<InsumoEntity> {
+  static toPersistence(model: Partial<Insumo> | null | undefined): InsumoEntity | null {
     if (!model) return null;
     const entity = new InsumoEntity();
     if (model.id !== undefined) entity.id = model.id;

@@ -30,13 +30,21 @@ export class MovimientoProduccionEntity {
   @Column({ type: 'double precision', name: 'costo_total' })
   costoTotal: number;
 
-  @Column({ type: 'integer', name: 'venta_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Ventas' (tabla: ventas).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'venta_id', nullable: true, comment: 'FK lógica -> módulo ventas (ventas.id)' })
   ventaId: number;
 
   @Column({ type: 'text', nullable: true })
   descripcion: string;
 
-  @Column({ type: 'integer', name: 'usuario_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Usuarios' (tabla: usuarios).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'usuario_id', nullable: true, comment: 'FK lógica -> módulo usuarios (usuarios.id)' })
   usuarioId: number;
 
   @Column({ type: 'timestamp' })

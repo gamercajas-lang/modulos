@@ -24,7 +24,11 @@ export class HistorialPrecioLoteEntity {
   @Column({ type: 'double precision', name: 'precio_nuevo' })
   precioNuevo: number;
 
-  @Column({ type: 'integer', name: 'usuario_id', nullable: true })
+  /**
+   * Clave foránea lógica hacia el módulo 'Usuarios' (tabla: usuarios).
+   * Mantenido como integer sin relación directa TypeORM para desacoplamiento modular.
+   */
+  @Column({ type: 'integer', name: 'usuario_id', nullable: true, comment: 'FK lógica -> módulo usuarios (usuarios.id)' })
   usuarioId: number;
 
   @Column({ type: 'timestamp' })
