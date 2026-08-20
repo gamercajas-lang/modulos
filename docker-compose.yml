@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: agrotech-db
+    restart: always
+    environment:
+      POSTGRES_USER: agrotech
+      POSTGRES_PASSWORD: agrotech123
+      POSTGRES_DB: agrotech_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
