@@ -1,0 +1,65 @@
+import { Repository } from 'typeorm';
+import { Actividad } from './entities/actividad.entity';
+import { ActividadHistorial } from './entities/actividad-historial.entity';
+import { ActividadResponsable } from './entities/actividad-responsable.entity';
+import { ActividadServicio } from './entities/actividad-servicio.entity';
+import { ActividadHerramienta } from './entities/actividad-herramienta.entity';
+import { ActividadEvidencia } from './entities/actividad-evidencia.entity';
+import { UsoHerramienta } from './entities/uso-herramienta.entity';
+import { TransaccionFinanciera } from './entities/transaccion-financiera.entity';
+export declare class ActividadesService {
+    private readonly actividades;
+    private readonly historial;
+    private readonly responsables;
+    private readonly servicios;
+    private readonly herramientas;
+    private readonly evidencias;
+    private readonly usos;
+    private readonly transacciones;
+    constructor(actividades: Repository<Actividad>, historial: Repository<ActividadHistorial>, responsables: Repository<ActividadResponsable>, servicios: Repository<ActividadServicio>, herramientas: Repository<ActividadHerramienta>, evidencias: Repository<ActividadEvidencia>, usos: Repository<UsoHerramienta>, transacciones: Repository<TransaccionFinanciera>);
+    findAll(): Promise<Actividad[]>;
+    findOne(id: number): Promise<Actividad>;
+    create(data: Partial<Actividad>): Promise<Actividad>;
+    update(id: number, data: Partial<Actividad>): Promise<{
+        id: number;
+        nombre?: string | undefined;
+        tipo?: string | undefined;
+        subtipo?: string | null | undefined;
+        loteId?: number | null | undefined;
+        subLoteId?: number | null | undefined;
+        cultivoId?: number | null | undefined;
+        fecha?: Date | undefined;
+        horasActividad?: number | null | undefined;
+        precioHoraActividad?: number | null | undefined;
+        costoManoObra?: number | null | undefined;
+        descripcion?: string | null | undefined;
+        estado?: string | undefined;
+        creadoPorUsuarioId?: number | null | undefined;
+        cantidadPlantas?: number | null | undefined;
+        kgRecolectados?: number | null | undefined;
+        productoAgroId?: number | null | undefined;
+        createdAt?: Date | undefined;
+        updatedAt?: Date | undefined;
+        deletedAt?: Date | null | undefined;
+        historial?: ActividadHistorial[] | undefined;
+        responsables?: ActividadResponsable[] | undefined;
+        servicios?: ActividadServicio[] | undefined;
+        herramientas?: ActividadHerramienta[] | undefined;
+        evidencias?: ActividadEvidencia[] | undefined;
+        usosHerramientas?: UsoHerramienta[] | undefined;
+        transaccionesFinancieras?: TransaccionFinanciera[] | undefined;
+    } & Actividad>;
+    remove(id: number): Promise<{
+        message: string;
+        id: number;
+    }>;
+    private repoMap;
+    children(kind: string): Promise<any[]>;
+    child(kind: string, id: number): Promise<any>;
+    createChild(kind: string, data: any): Promise<any>;
+    updateChild(kind: string, id: number, data: any): Promise<any>;
+    removeChild(kind: string, id: number): Promise<{
+        message: string;
+        id: number;
+    }>;
+}
