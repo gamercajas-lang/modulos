@@ -20,7 +20,7 @@ import { ActividadInsumoUso } from './actividades-insumos-uso/domain/entities/ac
 import { MovimientoInsumo } from './movimientos-insumos/domain/entities/movimiento-insumo.entity';
 import { Reserva } from './reservas/domain/entities/reserva.entity';
 import { AuthModule } from './auth/auth.module';
-import { AuthçService } from './authç/authç.service';
+import { AuthService } from './auth/auth.service';
 // NOTA: Insumo tampoco está en este array, mismo motivo.
 
 @Module({
@@ -46,7 +46,7 @@ import { AuthçService } from './authç/authç.service';
       ],
       synchronize: false,
     }),
-
+  
     ProveedoresModule,
     MovimientosInsumosModule,
     ReservasModule,
@@ -56,6 +56,6 @@ import { AuthçService } from './authç/authç.service';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthçService],
+  providers: [AppService],
 })
 export class AppModule {}
