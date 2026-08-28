@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { CrearEpaUseCase } from '../../../application/use-cases/epa/crear-epa.use-case';
 import { ListarEpasUseCase } from '../../../application/use-cases/epa/listar-epas.use-case';
@@ -15,8 +16,10 @@ import { ActualizarEpaUseCase } from '../../../application/use-cases/epa/actuali
 import { EliminarEpaUseCase } from '../../../application/use-cases/epa/eliminar-epa.use-case';
 import { CreateEpaDto } from '../../../application/dto/epa/create-epa.dto';
 import { UpdateEpaDto } from '../../../application/dto/epa/update-epa.dto';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('epas')
+@UseGuards(JwtAuthGuard)
 export class EpasController {
   constructor(
     private readonly crearEpa: CrearEpaUseCase,

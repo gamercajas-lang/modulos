@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { CrearTipoCultivoWikiUseCase } from '../../../application/use-cases/tipo-cultivo-wiki/crear-tipo-cultivo-wiki.use-case';
 import { ListarTiposCultivosWikiUseCase } from '../../../application/use-cases/tipo-cultivo-wiki/listar-tipos-cultivos-wiki.use-case';
@@ -15,8 +16,10 @@ import { ActualizarTipoCultivoWikiUseCase } from '../../../application/use-cases
 import { EliminarTipoCultivoWikiUseCase } from '../../../application/use-cases/tipo-cultivo-wiki/eliminar-tipo-cultivo-wiki.use-case';
 import { CreateTipoCultivoWikiDto } from '../../../application/dto/tipo-cultivo-wiki/create-tipo-cultivo-wiki.dto';
 import { UpdateTipoCultivoWikiDto } from '../../../application/dto/tipo-cultivo-wiki/update-tipo-cultivo-wiki.dto';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('tipos-cultivos-wiki')
+@UseGuards(JwtAuthGuard)
 export class TiposCultivosWikiController {
   constructor(
     private readonly crearTipoCultivoWiki: CrearTipoCultivoWikiUseCase,

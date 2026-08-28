@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { CrearLoteUseCase } from '../../../application/use-cases/lote/crear-lote.use-case';
 import { ListarLotesUseCase } from '../../../application/use-cases/lote/listar-lotes.use-case';
@@ -15,8 +16,10 @@ import { ActualizarLoteUseCase } from '../../../application/use-cases/lote/actua
 import { EliminarLoteUseCase } from '../../../application/use-cases/lote/eliminar-lote.use-case';
 import { CreateLoteDto } from '../../../application/dto/lote/create-lote.dto';
 import { UpdateLoteDto } from '../../../application/dto/lote/update-lote.dto';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('lotes')
+@UseGuards(JwtAuthGuard)
 export class LotesController {
   constructor(
     private readonly crearLote: CrearLoteUseCase,

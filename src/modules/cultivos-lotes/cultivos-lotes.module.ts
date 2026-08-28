@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './adapters/input/rest/auth/jwt.strategy';
 
 import { Lote } from './domain/entities/lote.entity';
 import { Sublote } from './domain/entities/sublote.entity';
@@ -59,6 +61,7 @@ import { EliminarWikiTipoEpaUseCase } from './application/use-cases/wiki-tipo-ep
       TipoCultivoWiki,
       WikiTipoEpa,
     ]),
+    PassportModule,
   ],
   controllers: [
     LotesController,
@@ -67,6 +70,7 @@ import { EliminarWikiTipoEpaUseCase } from './application/use-cases/wiki-tipo-ep
     WikiTipoEpaController,
   ],
   providers: [
+    JwtStrategy,
     { provide: LOTE_REPOSITORY, useClass: LoteTypeOrmRepository },
     CrearLoteUseCase,
     ListarLotesUseCase,

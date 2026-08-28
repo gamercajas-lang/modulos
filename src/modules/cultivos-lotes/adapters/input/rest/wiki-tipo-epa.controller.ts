@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { CrearWikiTipoEpaUseCase } from '../../../application/use-cases/wiki-tipo-epa/crear-wiki-tipo-epa.use-case';
 import { ListarWikiTipoEpaUseCase } from '../../../application/use-cases/wiki-tipo-epa/listar-wiki-tipo-epa.use-case';
@@ -15,8 +16,10 @@ import { ActualizarWikiTipoEpaUseCase } from '../../../application/use-cases/wik
 import { EliminarWikiTipoEpaUseCase } from '../../../application/use-cases/wiki-tipo-epa/eliminar-wiki-tipo-epa.use-case';
 import { CreateWikiTipoEpaDto } from '../../../application/dto/wiki-tipo-epa/create-wiki-tipo-epa.dto';
 import { UpdateWikiTipoEpaDto } from '../../../application/dto/wiki-tipo-epa/update-wiki-tipo-epa.dto';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller('wiki-tipo-epa')
+@UseGuards(JwtAuthGuard)
 export class WikiTipoEpaController {
   constructor(
     private readonly crearWikiTipoEpa: CrearWikiTipoEpaUseCase,
