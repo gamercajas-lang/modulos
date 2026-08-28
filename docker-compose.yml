@@ -1,20 +1,19 @@
-version: '3'
-
 services:
-
-  db:
-    image: mysql:8.0
-
-    container_name: backend_agro_db
-
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: agro_postgres
     restart: always
 
-    ports:
-      - "3306:3306"
-
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: backend_agro
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+    ports:
+      - "${DB_PORT}:5432"
 
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
