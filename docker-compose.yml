@@ -6,34 +6,26 @@ services:
     container_name: agro_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: ${DB_NAME:-proyecto_agro}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - '5433:5432'
+      - '${DB_PORT}:5432'
     volumes:
       - agro_pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-proyecto_agro}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
     networks:
       - agro_network
 
-  app:
+  backend:
     build: .
-    container_name: agro_app
+    container_name: agro_backend
     restart: unless-stopped
     env_file:
       - .env
-    environment:
-      - DB_HOST=postgres
     ports:
       - '3000:3000'
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     networks:
       - agro_network
 
