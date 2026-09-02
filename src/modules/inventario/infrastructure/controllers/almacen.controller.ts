@@ -10,11 +10,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { AlmacenUseCases } from '../../application/use-cases/almacen.use-cases';
 import { CreateAlmacenDto } from './dtos/create-almacen.dto';
 import { UpdateAlmacenDto } from './dtos/update-almacen.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('almacenes')
 export class AlmacenController {
   constructor(private readonly useCases: AlmacenUseCases) {}

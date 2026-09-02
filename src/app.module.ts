@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProduccionModule } from './modules/produccion/produccion.module';
 import { InventarioModule } from './modules/inventario/inventario.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { InventarioModule } from './modules/inventario/inventario.module';
         synchronize: false, // se trabaja con migraciones desde el inicio
       }),
     }),
+    AuthModule,
     ProduccionModule,
     InventarioModule,
   ],

@@ -10,11 +10,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { MovimientoProduccionUseCases } from '../../application/use-cases/movimiento-produccion.use-cases';
 import { CreateMovimientoProduccionDto } from './dtos/create-movimiento-produccion.dto';
 import { UpdateMovimientoProduccionDto } from './dtos/update-movimiento-produccion.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('movimientos-produccion')
 export class MovimientoProduccionController {
   constructor(private readonly useCases: MovimientoProduccionUseCases) {}

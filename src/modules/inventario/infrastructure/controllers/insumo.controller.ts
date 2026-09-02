@@ -10,11 +10,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { InsumoUseCases } from '../../application/use-cases/insumo.use-cases';
 import { CreateInsumoDto } from './dtos/create-insumo.dto';
 import { UpdateInsumoDto } from './dtos/update-insumo.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('insumos')
 export class InsumoController {
   constructor(private readonly useCases: InsumoUseCases) {}

@@ -10,11 +10,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { CategoriaUseCases } from '../../application/use-cases/categoria.use-cases';
 import { CreateCategoriaDto } from './dtos/create-categoria.dto';
 import { UpdateCategoriaDto } from './dtos/update-categoria.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('categorias')
 export class CategoriaController {
   constructor(private readonly useCases: CategoriaUseCases) {}

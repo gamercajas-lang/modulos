@@ -10,11 +10,14 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { LoteProduccionUseCases } from '../../application/use-cases/lote-produccion.use-cases';
 import { CreateLoteProduccionDto } from './dtos/create-lote-produccion.dto';
 import { UpdateLoteProduccionDto } from './dtos/update-lote-produccion.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('lotes-produccion')
 export class LoteProduccionController {
   constructor(private readonly useCases: LoteProduccionUseCases) {}
