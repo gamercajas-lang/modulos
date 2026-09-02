@@ -1,19 +1,37 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgis/postgis:16-3.4
     container_name: agro_postgres
-    restart: always
-
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
-
     ports:
-      - "${DB_PORT}:5432"
-
+      - '${DB_PORT}:5432'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - agro_pgdata:/var/lib/postgresql/data
+    networks:
+      - agro_network
+
+  backend:
+    build: .
+    container_name: agro_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    networks:
+      - agro_network
 
 volumes:
-  postgres_data:
+  agro_pgdata:
+
+networks:
+  agro_network:
+    driver: bridge

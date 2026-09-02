@@ -5,12 +5,12 @@ import { DataSource } from 'typeorm';
 
 config();
 
-import { Proveedor } from './proveedores/domain/entities/proveedor.entity';
-import { ActividadInsumo } from './actividad-insumos/domain/entities/actividad-insumo.entity';
-import { ActividadInsumoReserva } from './actividades-insumos-reserva/domain/entities/actividad-insumo-reserva.entity';
-import { ActividadInsumoUso } from './actividades-insumos-uso/domain/entities/actividad-insumo-uso.entity';
-import { MovimientoInsumo } from './movimientos-insumos/domain/entities/movimiento-insumo.entity';
-import { Reserva } from './reservas/domain/entities/reserva.entity';
+import { Proveedor } from './modules/proveedores/domain/entities/proveedor.entity';
+import { ActividadInsumo } from './modules/actividad-insumos/domain/entities/actividad-insumo.entity';
+import { ActividadInsumoReserva } from './modules/actividades-insumos-reserva/domain/entities/actividad-insumo-reserva.entity';
+import { ActividadInsumoUso } from './modules/actividades-insumos-uso/domain/entities/actividad-insumo-uso.entity';
+import { MovimientoInsumo } from './modules/movimientos-insumos/domain/entities/movimiento-insumo.entity';
+import { Reserva } from './modules/reservas/domain/entities/reserva.entity';
 
 export default new DataSource({
   type: 'postgres',
