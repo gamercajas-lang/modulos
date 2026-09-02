@@ -5,11 +5,11 @@ config();
 
 export default new DataSource({
   type: 'postgres',
-  host: process.env.DATABASE_HOST ?? 'localhost',
-  port: parseInt(process.env.DATABASE_PORT ?? '5432', 10),
-  username: process.env.DATABASE_USER ?? 'postgres',
-  password: process.env.DATABASE_PASSWORD ?? '',
-  database: process.env.DATABASE_NAME ?? 'agrotech',
+  host: process.env.DB_HOST ?? 'localhost',
+  port: parseInt(process.env.DB_PORT ?? '5432', 10),
+  username: process.env.DB_USERNAME ?? 'postgres',
+  password: process.env.DB_PASSWORD ?? '',
+  database: process.env.DB_NAME ?? 'agrotech',
   entities: [__dirname + '/**/*.entity.{js,ts}'],
   migrations: [__dirname + '/migrations/*.{js,ts}'],
   synchronize: false,
