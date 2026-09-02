@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '../../auth/auth.module';
 
 // Entidades de persistencia (TypeORM)
 import { RolOrmEntity } from './adapters/output/persistence/entities/rol-orm.entity';
@@ -15,6 +16,7 @@ import { TelegramFormEstadoOrmEntity } from './adapters/output/persistence/entit
 import { RolesController } from './adapters/input/rest/roles.controller';
 import { PermisosController } from './adapters/input/rest/permisos.controller';
 import { UsuariosController } from './adapters/input/rest/usuarios.controller';
+import { AuthController } from './adapters/input/rest/auth.controller';
 import { ProgramasFormacionController } from './adapters/input/rest/programas-formacion.controller';
 import { TiposFormacionController } from './adapters/input/rest/tipos-formacion.controller';
 import { NotificacionesController } from './adapters/input/rest/notificaciones.controller';
@@ -59,6 +61,7 @@ import { ListarUsuariosUseCase } from './application/use-cases/usuario/listar-us
 import { ObtenerUsuarioUseCase } from './application/use-cases/usuario/obtener-usuario.use-case';
 import { ActualizarUsuarioUseCase } from './application/use-cases/usuario/actualizar-usuario.use-case';
 import { EliminarUsuarioUseCase } from './application/use-cases/usuario/eliminar-usuario.use-case';
+import { LoginUseCase } from './application/use-cases/usuario/login.use-case';
 
 // Casos de uso: programa-formacion
 import { CrearProgramaFormacionUseCase } from './application/use-cases/programa-formacion/crear-programa-formacion.use-case';
@@ -98,6 +101,7 @@ import { EliminarNotificacionUseCase } from './application/use-cases/notificacio
       EmailCodeOrmEntity,
       TelegramFormEstadoOrmEntity,
     ]),
+    AuthModule,
   ],
   controllers: [
     RolesController,
@@ -106,6 +110,7 @@ import { EliminarNotificacionUseCase } from './application/use-cases/notificacio
     ProgramasFormacionController,
     TiposFormacionController,
     NotificacionesController,
+    AuthController,
   ],
   providers: [
     // Bindings puerto -> adaptador
@@ -138,6 +143,7 @@ import { EliminarNotificacionUseCase } from './application/use-cases/notificacio
     ObtenerUsuarioUseCase,
     ActualizarUsuarioUseCase,
     EliminarUsuarioUseCase,
+    LoginUseCase,
 
     // Casos de uso: programa-formacion
     CrearProgramaFormacionUseCase,

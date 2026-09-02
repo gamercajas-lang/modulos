@@ -7,7 +7,9 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../../auth/jwt-auth.guard';
 import { CrearUsuarioUseCase } from '../../../application/use-cases/usuario/crear-usuario.use-case';
 import { ListarUsuariosUseCase } from '../../../application/use-cases/usuario/listar-usuarios.use-case';
 import { ObtenerUsuarioUseCase } from '../../../application/use-cases/usuario/obtener-usuario.use-case';
@@ -33,18 +35,21 @@ export class UsuariosController {
     return resto;
   }
 
+  // Registro: queda publico, igual que el login.
   @Post()
   async create(@Body() dto: CreateUsuarioDto) {
     const usuario = await this.crearUsuario.execute(dto);
     return this.sanitize(usuario);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     const usuarios = await this.listarUsuarios.execute();
     return usuarios.map((usuario) => this.sanitize(usuario));
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const usuario = await this.obtenerUsuario.execute(+id);
@@ -52,6 +57,7 @@ export class UsuariosController {
     return this.sanitize(usuario);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async update(@Param('id') id: string, @Body() dto: UpdateUsuarioDto) {
     const usuario = await this.actualizarUsuario.execute(+id, dto);
@@ -59,6 +65,7 @@ export class UsuariosController {
     return this.sanitize(usuario);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eliminarUsuario.execute(+id);
