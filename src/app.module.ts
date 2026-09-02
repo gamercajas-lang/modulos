@@ -8,10 +8,12 @@ import { SensoresModule } from './modules/iot/sensores/sensores.module';
 import { SensorLecturasModule } from './modules/iot/sensor-lecturas/sensor-lecturas.module';
 import { SensorAlertasModule } from './modules/iot/sensor-alertas/sensor-alertas.module';
 import { SeedExecutionLogModule } from './modules/shared/seed-execution-log/seed-execution-log.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: getTypeOrmConfig,

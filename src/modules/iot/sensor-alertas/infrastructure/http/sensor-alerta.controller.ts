@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../../auth/jwt-auth.guard';
 import { CrearSensorAlertaUseCase } from '../../application/use-cases/crear-sensor-alerta.use-case';
 import { ListarSensorAlertasUseCase } from '../../application/use-cases/listar-sensor-alertas.use-case';
 import { ObtenerSensorAlertaUseCase } from '../../application/use-cases/obtener-sensor-alerta.use-case';
@@ -7,6 +8,7 @@ import { EliminarSensorAlertaUseCase } from '../../application/use-cases/elimina
 import { CrearSensorAlertaDto } from '../../application/dto/crear-sensor-alerta.dto';
 import { ActualizarSensorAlertaDto } from '../../application/dto/actualizar-sensor-alerta.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('sensor-alertas')
 export class SensorAlertaController {
   constructor(

@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../../auth/jwt-auth.guard';
 import { CrearIotGlobalConfigUseCase } from '../../application/use-cases/crear-iot-global-config.use-case';
 import { ListarIotGlobalConfigUseCase } from '../../application/use-cases/listar-iot-global-config.use-case';
 import { ObtenerIotGlobalConfigUseCase } from '../../application/use-cases/obtener-iot-global-config.use-case';
@@ -7,6 +8,7 @@ import { EliminarIotGlobalConfigUseCase } from '../../application/use-cases/elim
 import { CrearIotGlobalConfigDto } from '../../application/dto/crear-iot-global-config.dto';
 import { ActualizarIotGlobalConfigDto } from '../../application/dto/actualizar-iot-global-config.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('iot-global-config')
 export class IotGlobalConfigController {
   constructor(

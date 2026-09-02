@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../../../../../auth/jwt-auth.guard';
 import { CrearSensorUseCase } from '../../application/use-cases/crear-sensor.use-case';
 import { ListarSensoresUseCase } from '../../application/use-cases/listar-sensores.use-case';
 import { ObtenerSensorUseCase } from '../../application/use-cases/obtener-sensor.use-case';
@@ -7,6 +8,7 @@ import { EliminarSensorUseCase } from '../../application/use-cases/eliminar-sens
 import { CrearSensorDto } from '../../application/dto/crear-sensor.dto';
 import { ActualizarSensorDto } from '../../application/dto/actualizar-sensor.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('sensores')
 export class SensorController {
   constructor(
