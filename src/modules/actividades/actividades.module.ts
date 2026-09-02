@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './auth/jwt.strategy';
 import { Actividad } from './entities/actividad.entity';
 import { ActividadHistorial } from './entities/actividad-historial.entity';
 import { ActividadEvidencia } from './entities/actividad-evidencia.entity';
@@ -23,9 +25,9 @@ const ACTIVIDAD_ENTITIES = [
 ];
 
 @Module({
-  imports: [TypeOrmModule.forFeature(ACTIVIDAD_ENTITIES)],
+  imports: [TypeOrmModule.forFeature(ACTIVIDAD_ENTITIES), PassportModule],
   controllers: [ActividadesController],
-  providers: [ActividadesService],
+  providers: [ActividadesService, JwtStrategy],
   exports: [ActividadesService],
 })
 export class ActividadesModule {}

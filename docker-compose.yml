@@ -1,0 +1,41 @@
+version: '3.8'
+
+# Basado en el docker-compose de Jose_dev, adaptado a los nombres de variables
+# de entorno usados en esta rama (Santiago_dev): DATABASE_* en vez de DB_*.
+# Todos los valores salen del .env — no hay credenciales escritas aquí.
+
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: agro_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - '${DATABASE_PORT}:5432'
+    volumes:
+      - agro_pgdata:/var/lib/postgresql/data
+    networks:
+      - agro_network
+
+  backend:
+    build: .
+    container_name: agro_backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:3000'
+    depends_on:
+      - postgres
+    networks:
+      - agro_network
+
+volumes:
+  agro_pgdata:
+
+networks:
+  agro_network:
+    driver: bridge
