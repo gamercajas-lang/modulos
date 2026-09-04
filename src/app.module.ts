@@ -4,6 +4,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProduccionModule } from './modules/produccion/produccion.module';
 import { InventarioModule } from './modules/inventario/inventario.module';
 import { AuthModule } from './auth/auth.module';
+import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
+
+// A medida que cada persona termine su módulo, lo importa aquí, ejemplo:
+// import { UsuariosModule } from './modules/usuarios/usuarios.module';
+// import { ProveedoresInsumosModule } from './modules/proveedores-insumos/proveedores-insumos.module';
+// import { ActividadesModule } from './modules/actividades/actividades.module';
+// import { VentasModule } from './modules/ventas/ventas.module';
+// import { IotModule } from './modules/iot/iot.module';
 
 @Module({
   imports: [
@@ -24,6 +32,12 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     ProduccionModule,
     InventarioModule,
+    CultivosLotesModule,
+    // UsuariosModule,
+    // ProveedoresInsumosModule,
+    // ActividadesModule,
+    // VentasModule,
+    // IotModule,
   ],
 })
 export class AppModule {}
