@@ -4,17 +4,17 @@ Backend del sistema agroindustrial (SENA — ADSO), construido en equipo de 6 pe
 
 ## Tecnologías
 
-- NestJS + TypeScript
-- TypeORM + PostgreSQL con extensión **PostGIS** (el modelo usa columnas `geometry`)
-- Docker + Docker Compose
-- class-validator / class-transformer
-- Migraciones TypeORM (sin `synchronize: true`)
+* NestJS + TypeScript
+* TypeORM + PostgreSQL con extensión **PostGIS** (el modelo usa columnas `geometry`)
+* Docker + Docker Compose
+* class-validator / class-transformer
+* Migraciones TypeORM (sin `synchronize: true`)
 
 ## Requisitos previos
 
-- Node.js 18+
-- Docker Desktop
-- Un cliente de API: Postman, Insomnia o Thunder Client
+* Node.js 18+
+* Docker Desktop
+* Un cliente de API: Postman, Insomnia o Thunder Client
 
 ## Instalación
 
@@ -68,21 +68,78 @@ Flujo: `Controller → Use Case → Port → Repositorio TypeORM → PostgreSQL`
 
 ## División de módulos y responsables
 
-| Módulo | Carpeta | Responsable |
-|---|---|---|
-| Usuarios, autenticación y permisos | `src/modules/usuarios` | Persona 1 |
-| Cultivos y lotes | `src/modules/cultivos-lotes` | Persona 2 |
-| Producción | `src/modules/produccion` | Persona 3 |
-| Inventario | `src/modules/inventario` | Persona 3 |
-| Proveedores y uso de insumos | `src/modules/proveedores-insumos` | Persona 4 |
-| Actividades y ventas | `src/modules/actividades`, `src/modules/ventas` | Persona 5 |
-| IoT | `src/modules/iot` | Persona 6 |
+| Módulo                             | Carpeta                                         | Responsable |
+| ---------------------------------- | ----------------------------------------------- | ----------- |
+| Usuarios, autenticación y permisos | `src/modules/usuarios`                          | Persona 1   |
+| Cultivos y lotes                   | `src/modules/cultivos-lotes`                    | Persona 2   |
+| Producción                         | `src/modules/produccion`                        | Persona 3   |
+| Inventario                         | `src/modules/inventario`                        | Persona 3   |
+| Proveedores y uso de insumos       | `src/modules/proveedores-insumos`               | Persona 4   |
+| Actividades y ventas               | `src/modules/actividades`, `src/modules/ventas` | Persona 5   |
+| IoT                                | `src/modules/iot`                               | Persona 6   |
 
 ## Estado actual
 
-- ✅ Base del proyecto (Docker, TypeORM, migraciones, ValidationPipe).
-- ✅ Módulo `cultivos-lotes`: CRUD de `lotes` completo. `sublotes`, `cultivos`, `cultivo_historial`, `epas`, `tipos_cultivos_wiki` y `wiki_tipo_epa` registrados como entidad, CRUD pendiente.
-- ⬜ Módulos de las demás 5 personas: pendientes.
+* ✅ Base del proyecto (Docker, TypeORM, migraciones, ValidationPipe).
+* ✅ Módulo `cultivos-lotes`: CRUD de `lotes` completo. `sublotes`, `cultivos`, `cultivo_historial`, `epas`, `tipos_cultivos_wiki` y `wiki_tipo_epa` registrados como entidad, CRUD pendiente.
+* ⬜ Módulos de las demás 5 personas: pendientes.
+
+## P5 — Actividades y Ventas
+
+El desarrollo correspondiente a la Persona 5 incluye los módulos de **Actividades** y **Ventas**.
+
+### Tablas de Actividades
+
+* `actividades`
+* `actividad_historial`
+* `actividades_responsables`
+* `actividades_servicios`
+* `actividades_herramientas`
+* `actividades_evidencias`
+* `usos_herramientas`
+* `transacciones_financieras`
+
+### Tablas de Ventas
+
+* `clientes`
+* `ventas`
+* `ventas_detalles`
+* `pagos`
+* `facturas`
+
+### Tablas que no pertenecen a P5
+
+No se incluye `actividad_insumos`. Esa tabla pertenece a P4/Jhonatan.
+
+Tampoco se incluyen entidades de usuarios, cultivos, lotes, insumos, proveedores, producción o IoT. Las FK hacia esas tablas se mantienen como IDs.
+
+## Ejecución y comprobación de P5
+
+Para instalar las dependencias:
+
+```powershell
+npm install
+```
+
+Para comprobar que TypeScript compile correctamente:
+
+```powershell
+npx tsc --noEmit
+```
+
+Para construir el proyecto:
+
+```powershell
+npm run build
+```
+
+La conexión PostgreSQL usa `ConfigService` y `synchronize: false`.
+
+Copia `.env.example` como `.env` y configura tus credenciales locales.
+
+## Corrección de compilación
+
+Se corrigió el problema TS2349 de TypeORM causado por indexar dinámicamente repositorios de entidades diferentes. Los mapas internos ahora usan `Repository<any>` en un único punto controlado.
 
 ## Flujo de trabajo en Git
 
@@ -97,6 +154,7 @@ feature/persona-X-...
 Nadie trabaja directo sobre `main`. Cada Pull Request debe describir: qué se hizo, qué endpoints se agregaron, si se creó una migración y qué se probó.
 
 Ramas:
+
 ```text
 feature/persona-1-usuarios
 feature/persona-2-cultivos-lotes
