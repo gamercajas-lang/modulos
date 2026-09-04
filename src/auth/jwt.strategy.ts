@@ -1,20 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
+export interface JwtPayload {
+  sub: number;
+  email: string;
+  rol: number | null;
+}
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET,
+      secretOrKey: configService.get<string>('JWT_SECRET'),
     });
   }
 
-  async validate(payload: any) {
-    // El payload es lo que Marlon firma en el login (login/auth module).
-    // Se retorna tal cual para dejarlo disponible en req.user en los controllers.
-    return payload;
+  // Lo que retorna aquí queda disponible como request.user en los
+  // controladores protegidos por JwtAuthGuard.
+  async validate(payload: JwtPayload) {
+    return { userId: payload.sub, email: payload.email, rol: payload.rol };
   }
 }
