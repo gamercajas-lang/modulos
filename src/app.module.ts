@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-//import { CultivosLotesModule } from './modules/cultivos-lotes/cultivos-lotes.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
 
 // A medida que cada persona termine su módulo, lo importa aquí, ejemplo:
-// import { UsuariosModule } from './modules/usuarios/usuarios.module';
+
 // import { ProduccionModule } from './modules/produccion/produccion.module';
 // import { InventarioModule } from './modules/inventario/inventario.module';
 // import { ProveedoresInsumosModule } from './modules/proveedores-insumos/proveedores-insumos.module';
@@ -30,6 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     //CultivosLotesModule,
     // UsuariosModule,
+    UsuariosModule,
     // ProduccionModule,
     // InventarioModule,
     // ProveedoresInsumosModule,
