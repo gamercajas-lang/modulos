@@ -1,27 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
-export interface JwtPayload {
-  sub: number;
-  email: string;
-  rol: number | null;
-}
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(configService: ConfigService) {
+  constructor() {
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+      throw new Error('JWT_SECRET no está definido en las variables de entorno');
+    }
+
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET'),
+      secretOrKey: secret,
     });
   }
 
-  // Lo que retorna aquí queda disponible como request.user en los
-  // controladores protegidos por JwtAuthGuard.
-  async validate(payload: JwtPayload) {
-    return { userId: payload.sub, email: payload.email, rol: payload.rol };
+  async validate(payload: any) {
+    if (!payload) {
+      throw new UnauthorizedException();
+    }
+
+    return payload;
   }
 }

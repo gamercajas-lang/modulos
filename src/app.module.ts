@@ -2,37 +2,49 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ProduccionModule } from './modules/produccion/produccion.module';
-import { InventarioModule } from './modules/inventario/inventario.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+import { ProveedoresModule } from './modules/proveedores/proveedores.module';
+import { MovimientosInsumosModule } from './modules/movimientos-insumos/movimientos-insumos.module';
+import { ReservasModule } from './modules/reservas/reservas.module';
+import { ActividadesInsumosReservaModule } from './modules/actividades-insumos-reserva/actividades-insumos-reserva.module';
+import { ActividadesInsumosUsoModule } from './modules/actividades-insumos-uso/actividades-insumos-uso.module';
+import { ActividadInsumosModule } from './modules/actividad-insumos/actividad-insumos.module';
+// NOTA: el módulo de insumos (tabla `insumos`) es responsabilidad de Michael (P3);
+// el duplicado que vivía en esta rama (src/insumos) fue eliminado.
+
 import { AuthModule } from './auth/auth.module';
-import { ActividadesModule } from './modules/actividades/actividades.module';
-import { VentasModule } from './modules/ventas/ventas.module';
-import { UsuariosModule } from './modules/usuarios/usuarios.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true, // process.env.* disponible en toda la app, incluida JwtStrategy
+    }),
 
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: config.get<string>('DB_HOST', 'localhost'),
-        port: Number(config.get<string>('DB_PORT', '5432')),
-        username: config.get<string>('DB_USERNAME', 'postgres'),
-        password: config.get<string>('DB_PASSWORD', ''),
-        database: config.get<string>('DB_NAME', 'proyecto_agro'),
-        autoLoadEntities: true,
+        host: config.get<string>('DB_HOST'),
+        port: parseInt(config.get<string>('DB_PORT') ?? '5432', 10),
+        username: config.get<string>('DB_USERNAME'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_NAME'),
+        autoLoadEntities: true, // cada módulo registra sus entidades vía TypeOrmModule.forFeature
         synchronize: false,
       }),
     }),
 
+    ProveedoresModule,
+    MovimientosInsumosModule,
+    ReservasModule,
+    ActividadesInsumosReservaModule,
+    ActividadesInsumosUsoModule,
+    ActividadInsumosModule,
     AuthModule,
-    ProduccionModule,
-    InventarioModule,
-    ActividadesModule,
-    VentasModule,
-    UsuariosModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

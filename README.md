@@ -1,165 +1,98 @@
-# Proyecto Agro — API REST (NestJS + TypeORM + PostgreSQL/PostGIS)
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-Backend del sistema agroindustrial (SENA — ADSO), construido en equipo de 6 personas con **Arquitectura Hexagonal (Ports and Adapters)**.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## Tecnologías
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-* NestJS + TypeScript
-* TypeORM + PostgreSQL con extensión **PostGIS** (el modelo usa columnas `geometry`)
-* Docker + Docker Compose
-* class-validator / class-transformer
-* Migraciones TypeORM (sin `synchronize: true`)
+## Description
 
-## Requisitos previos
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-* Node.js 18+
-* Docker Desktop
-* Un cliente de API: Postman, Insomnia o Thunder Client
-
-## Instalación
-
-```bash
-git clone <url-del-repositorio>
-cd proyecto-agro
-npm install
-cp .env.example .env   # ajustar credenciales si es necesario
-```
-
-## Levantar la base de datos
-
-```bash
-docker compose up -d postgres
-docker ps   # debe verse agro_postgres corriendo
-```
-
-## Ejecutar el proyecto
+## Project setup
 
 ```bash
-npm run start:dev
+$ npm install
 ```
 
-Servidor disponible en `http://localhost:3000`.
-
-## Migraciones
+## Compile and run the project
 
 ```bash
-npm run migration:generate -- src/migrations/NombreDescriptivo
-npm run migration:run
-npm run migration:revert
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
 
-## Arquitectura Hexagonal
+## Run tests
 
-Cada módulo en `src/modules/<nombre>/` sigue esta estructura:
+```bash
+# unit tests
+$ npm run test
 
-```text
-modulo/
-├── domain/entities/          → entidades TypeORM
-├── application/
-│   ├── dto/                  → DTOs con class-validator
-│   └── use-cases/            → un caso de uso por operación
-├── ports/output/             → interfaces de repositorio
-└── adapters/
-    ├── input/rest/           → controladores REST
-    └── output/persistence/   → repositorios TypeORM
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
 ```
 
-Flujo: `Controller → Use Case → Port → Repositorio TypeORM → PostgreSQL`.
+## Deployment
 
-## División de módulos y responsables
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
-| Módulo                             | Carpeta                                         | Responsable |
-| ---------------------------------- | ----------------------------------------------- | ----------- |
-| Usuarios, autenticación y permisos | `src/modules/usuarios`                          | Persona 1   |
-| Cultivos y lotes                   | `src/modules/cultivos-lotes`                    | Persona 2   |
-| Producción                         | `src/modules/produccion`                        | Persona 3   |
-| Inventario                         | `src/modules/inventario`                        | Persona 3   |
-| Proveedores y uso de insumos       | `src/modules/proveedores-insumos`               | Persona 4   |
-| Actividades y ventas               | `src/modules/actividades`, `src/modules/ventas` | Persona 5   |
-| IoT                                | `src/modules/iot`                               | Persona 6   |
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
 
-## Estado actual
-
-* ✅ Base del proyecto (Docker, TypeORM, migraciones, ValidationPipe).
-* ✅ Módulo `cultivos-lotes`: CRUD de `lotes` completo. `sublotes`, `cultivos`, `cultivo_historial`, `epas`, `tipos_cultivos_wiki` y `wiki_tipo_epa` registrados como entidad, CRUD pendiente.
-* ⬜ Módulos de las demás 5 personas: pendientes.
-
-## P5 — Actividades y Ventas
-
-El desarrollo correspondiente a la Persona 5 incluye los módulos de **Actividades** y **Ventas**.
-
-### Tablas de Actividades
-
-* `actividades`
-* `actividad_historial`
-* `actividades_responsables`
-* `actividades_servicios`
-* `actividades_herramientas`
-* `actividades_evidencias`
-* `usos_herramientas`
-* `transacciones_financieras`
-
-### Tablas de Ventas
-
-* `clientes`
-* `ventas`
-* `ventas_detalles`
-* `pagos`
-* `facturas`
-
-### Tablas que no pertenecen a P5
-
-No se incluye `actividad_insumos`. Esa tabla pertenece a P4/Jhonatan.
-
-Tampoco se incluyen entidades de usuarios, cultivos, lotes, insumos, proveedores, producción o IoT. Las FK hacia esas tablas se mantienen como IDs.
-
-## Ejecución y comprobación de P5
-
-Para instalar las dependencias:
-
-```powershell
-npm install
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
 ```
 
-Para comprobar que TypeScript compile correctamente:
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-```powershell
-npx tsc --noEmit
-```
+## Resources
 
-Para construir el proyecto:
+Check out a few resources that may come in handy when working with NestJS:
 
-```powershell
-npm run build
-```
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-La conexión PostgreSQL usa `ConfigService` y `synchronize: false`.
+## Support
 
-Copia `.env.example` como `.env` y configura tus credenciales locales.
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Corrección de compilación
+## Stay in touch
 
-Se corrigió el problema TS2349 de TypeORM causado por indexar dinámicamente repositorios de entidades diferentes. Los mapas internos ahora usan `Repository<any>` en un único punto controlado.
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## Flujo de trabajo en Git
+## License
 
-```text
-main
-  ↑ (Pull Request)
-develop
-  ↑ (Pull Request)
-feature/persona-X-...
-```
-
-Nadie trabaja directo sobre `main`. Cada Pull Request debe describir: qué se hizo, qué endpoints se agregaron, si se creó una migración y qué se probó.
-
-Ramas:
-
-```text
-feature/persona-1-usuarios
-feature/persona-2-cultivos-lotes
-feature/persona-3-produccion-inventario
-feature/persona-4-proveedores-insumos
-feature/persona-5-actividades-ventas
-feature/persona-6-iot-infraestructura
-```
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
