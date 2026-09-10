@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { EPA_REPOSITORY, EpaRepositoryPort } from '../../../ports/output/epa-repository.port';
+import { EPA_REPOSITORY, type EpaRepositoryPort } from '../../../ports/output/epa-repository.port';
 import { CreateEpaDto } from '../../dto/epa/create-epa.dto';
 
 @Injectable()

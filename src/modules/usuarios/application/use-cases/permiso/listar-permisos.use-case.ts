@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PERMISO_REPOSITORY, PermisoRepositoryPort } from '../../../ports/output/permiso-repository.port';
+import { PERMISO_REPOSITORY, type PermisoRepositoryPort } from '../../../ports/output/permiso-repository.port';
 
 @Injectable()
 export class ListarPermisosUseCase {

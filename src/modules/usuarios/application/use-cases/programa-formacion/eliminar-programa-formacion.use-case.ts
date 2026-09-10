@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PROGRAMA_FORMACION_REPOSITORY, ProgramaFormacionRepositoryPort } from '../../../ports/output/programa-formacion-repository.port';
+import { PROGRAMA_FORMACION_REPOSITORY, type ProgramaFormacionRepositoryPort } from '../../../ports/output/programa-formacion-repository.port';
 
 @Injectable()
 export class EliminarProgramaFormacionUseCase {

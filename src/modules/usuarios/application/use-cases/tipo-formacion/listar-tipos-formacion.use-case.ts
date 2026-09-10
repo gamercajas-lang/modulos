@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TIPO_FORMACION_REPOSITORY, TipoFormacionRepositoryPort } from '../../../ports/output/tipo-formacion-repository.port';
+import { TIPO_FORMACION_REPOSITORY, type TipoFormacionRepositoryPort } from '../../../ports/output/tipo-formacion-repository.port';
 
 @Injectable()
 export class ListarTiposFormacionUseCase {

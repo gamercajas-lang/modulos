@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  WIKI_TIPO_EPA_REPOSITORY,
-  WikiTipoEpaRepositoryPort,
-} from '../../../ports/output/wiki-tipo-epa-repository.port';
+import { WIKI_TIPO_EPA_REPOSITORY, type WikiTipoEpaRepositoryPort } from '../../../ports/output/wiki-tipo-epa-repository.port';
 
 @Injectable()
 export class EliminarWikiTipoEpaUseCase {

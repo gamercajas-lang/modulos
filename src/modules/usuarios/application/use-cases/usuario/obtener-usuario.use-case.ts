@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USUARIO_REPOSITORY, UsuarioRepositoryPort } from '../../../ports/output/usuario-repository.port';
+import { USUARIO_REPOSITORY, type UsuarioRepositoryPort } from '../../../ports/output/usuario-repository.port';
 
 @Injectable()
 export class ObtenerUsuarioUseCase {

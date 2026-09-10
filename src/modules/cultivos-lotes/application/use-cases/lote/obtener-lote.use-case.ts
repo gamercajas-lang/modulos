@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LOTE_REPOSITORY, LoteRepositoryPort } from '../../../ports/output/lote-repository.port';
+import { LOTE_REPOSITORY, type LoteRepositoryPort } from '../../../ports/output/lote-repository.port';
 
 @Injectable()
 export class ObtenerLoteUseCase {

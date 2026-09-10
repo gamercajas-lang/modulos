@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  TIPO_CULTIVO_WIKI_REPOSITORY,
-  TipoCultivoWikiRepositoryPort,
-} from '../../../ports/output/tipo-cultivo-wiki-repository.port';
+import { TIPO_CULTIVO_WIKI_REPOSITORY, type TipoCultivoWikiRepositoryPort } from '../../../ports/output/tipo-cultivo-wiki-repository.port';
 
 @Injectable()
 export class EliminarTipoCultivoWikiUseCase {

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ROL_REPOSITORY, RolRepositoryPort } from '../../../ports/output/rol-repository.port';
+import { ROL_REPOSITORY, type RolRepositoryPort } from '../../../ports/output/rol-repository.port';
 import { CreateRolDto } from '../../dto/rol/create-rol.dto';
 
 @Injectable()

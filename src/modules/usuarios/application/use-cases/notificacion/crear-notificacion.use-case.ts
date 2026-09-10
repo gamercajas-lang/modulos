@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { NOTIFICACION_REPOSITORY, NotificacionRepositoryPort } from '../../../ports/output/notificacion-repository.port';
+import { NOTIFICACION_REPOSITORY, type NotificacionRepositoryPort } from '../../../ports/output/notificacion-repository.port';
 import { CreateNotificacionDto } from '../../dto/notificacion/create-notificacion.dto';
 
 @Injectable()

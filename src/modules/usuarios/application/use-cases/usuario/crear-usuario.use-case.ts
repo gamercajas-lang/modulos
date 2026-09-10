@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { USUARIO_REPOSITORY, UsuarioRepositoryPort } from '../../../ports/output/usuario-repository.port';
+import { USUARIO_REPOSITORY, type UsuarioRepositoryPort } from '../../../ports/output/usuario-repository.port';
 import { CreateUsuarioDto } from '../../dto/usuario/create-usuario.dto';
 
 const SALT_ROUNDS = 10;

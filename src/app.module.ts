@@ -13,6 +13,11 @@ import { ActividadesInsumosUsoModule } from './modules/actividades-insumos-uso/a
 import { ActividadInsumosModule } from './modules/actividad-insumos/actividad-insumos.module';
 // NOTA: el módulo de insumos (tabla `insumos`) es responsabilidad de Michael (P3);
 // el duplicado que vivía en esta rama (src/insumos) fue eliminado.
+import { ProduccionModule } from './modules/produccion/produccion.module';
+import { InventarioModule } from './modules/inventario/inventario.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
+import { VentasModule } from './modules/ventas/ventas.module';
+import { IncidenciaModule } from './incidencia/incidencia.module';
 
 import { AuthModule } from './auth/auth.module';
 
@@ -42,6 +47,11 @@ import { AuthModule } from './auth/auth.module';
     ActividadesInsumosReservaModule,
     ActividadesInsumosUsoModule,
     ActividadInsumosModule,
+    ProduccionModule,
+    InventarioModule,
+    UsuariosModule,
+    VentasModule,
+    IncidenciaModule,
     AuthModule,
   ],
   controllers: [AppController],
