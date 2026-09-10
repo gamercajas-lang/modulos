@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import { AuthModule } from '../../auth/auth.module';
 
 // Entidades de persistencia (TypeORM)
@@ -102,6 +104,15 @@ import { EliminarNotificacionUseCase } from './application/use-cases/notificacio
       TelegramFormEstadoOrmEntity,
     ]),
     AuthModule,
+    // LoginUseCase necesita JwtService para firmar el accessToken; AuthModule
+    // (src/auth) no lo provee, asi que este modulo registra su propio JwtModule.
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1d' },
+      }),
+    }),
   ],
   controllers: [
     RolesController,
